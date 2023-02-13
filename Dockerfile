@@ -1,8 +1,8 @@
-FROM ruby:2.7.1-alpine
+FROM ruby:2.7.7-alpine
 
 WORKDIR /app
 
-ENV RAILS_VERSION=6.0.3.2
+ENV RAILS_VERSION=6.0.6.1
 ENV EDITOR=vim
 
 RUN apk update && apk add --update \
