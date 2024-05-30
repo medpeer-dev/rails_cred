@@ -2,7 +2,7 @@ FROM ruby:3.1.6-alpine
 
 WORKDIR /app
 
-ENV RAILS_VERSION=6.1.7.7
+ENV RAILS_VERSION=7.0.8.3
 ENV EDITOR=vim
 
 RUN apk update && apk add --update \
@@ -12,7 +12,6 @@ RUN apk update && apk add --update \
 
 RUN gem i rails --no-document --version $RAILS_VERSION
 RUN rails new \
-      --skip-gemfile \
       --skip-git \
       --skip-keeps \
       --skip-action-mailer \
@@ -20,19 +19,18 @@ RUN rails new \
       --skip-action-text \
       --skip-active-record \
       --skip-active-storage \
-      --skip-puma \
       --skip-action-cable \
-      --skip-sprockets \
-      --skip-spring \
-      --skip-listen \
+      --skip-asset-pipeline \
       --skip-javascript \
-      --skip-turbolinks \
+      --skip-hotwire \
+      --skip-jbuilder \
       --skip-test \
       --skip-system-test \
       --skip-bootsnap \
-      --skip-webpack-install \
       .
-RUN bundle init \
+
+RUN rm Gemfile Gemfile.lock \
+      && bundle init \
       && echo "gem 'rails', '$RAILS_VERSION'" >> Gemfile \
       && bundle install
 
